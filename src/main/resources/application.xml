@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="pool1" name="p1, p11" class="ru.michaelshell.spring.database.pool.ConnectionPool">
+        <constructor-arg name="username" type="java.lang.String" value="postgres"/>
+        <constructor-arg name="properties" type="java.util.Map">
+            <map>
+                <entry key="url" value="postgresUrl"/>
+                <entry key="password" value="1234"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="poolSize" type="java.lang.Integer" value="20"/>
+        <constructor-arg name="args" type="java.util.List">
+            <list>
+                <value>--value1--</value>
+                <value>--value2--</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>
