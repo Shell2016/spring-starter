@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+    <context:annotation-config/>
+    <context:property-placeholder location="application.properties"/>
+
+    <bean class="ru.michaelshell.spring.bpp.InjectBeanPostProcessor"/>
+    <bean class="ru.michaelshell.spring.bpp.TransactionBeanPostProcessor"/>
+    <bean class="ru.michaelshell.spring.bpp.AuditingBeanPostProcessor"/>
+
+<!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
+    <bean id="driver" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="PostgresDriver"/>
+    </bean>
+
+    <bean id="pool2" class="ru.michaelshell.spring.database.pool.ConnectionPool"/>
     <bean id="pool1" name="p1, p11" class="ru.michaelshell.spring.database.pool.ConnectionPool">
-        <constructor-arg name="username" type="java.lang.String" value="postgres"/>
+        <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>
         <constructor-arg name="properties" type="java.util.Map">
-            <map>
-                <entry key="url" value="postgresUrl"/>
-                <entry key="password" value="1234"/>
-            </map>
+            <null/>
         </constructor-arg>
-        <constructor-arg name="poolSize" type="java.lang.Integer" value="20"/>
+        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>
         <constructor-arg name="args" type="java.util.List">
             <list>
                 <value>--value1--</value>
                 <value>--value2--</value>
             </list>
         </constructor-arg>
+        <property name="properties">
+            <map>
+                <entry key="url" value="${db.url}"/>
+                <entry key="password" value="${db.password}"/>
+                <entry key="test" value="#{driver.length() > 10}"/>
+                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>
+                <entry key="currentUser" value="#{systemProperties['user.name']}"/>
+                <entry key="currentUser" value="${user.name}"/>
+            </map>
+        </property>
     </bean>
+
+    <bean id="companyRepository" class="ru.michaelshell.spring.repository.CompanyRepository"/>
+
 
 </beans>
