@@ -7,44 +7,52 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:annotation-config/>
     <context:property-placeholder location="application.properties"/>
+    <context:component-scan base-package="ru.michaelshell.spring"
+                            annotation-config="true"
+                            resource-pattern="**/*.class"
+                            scoped-proxy="no"
+                            use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+        <context:include-filter type="assignable" expression="ru.michaelshell.spring.repository.CrudRepository"/>
+        <context:include-filter type="regex" expression="com\..+Repository"/>
+    </context:component-scan>
 
-    <bean class="ru.michaelshell.spring.bpp.InjectBeanPostProcessor"/>
-    <bean class="ru.michaelshell.spring.bpp.TransactionBeanPostProcessor"/>
-    <bean class="ru.michaelshell.spring.bpp.AuditingBeanPostProcessor"/>
+    <!--    <bean class="ru.michaelshell.spring.bpp.InjectBeanPostProcessor"/>-->
+    <!--    <bean class="ru.michaelshell.spring.bpp.TransactionBeanPostProcessor"/>-->
+    <!--    <bean class="ru.michaelshell.spring.bpp.AuditingBeanPostProcessor"/>-->
 
-<!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
+    <!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
     <bean id="driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="PostgresDriver"/>
     </bean>
 
-    <bean id="pool2" class="ru.michaelshell.spring.database.pool.ConnectionPool"/>
-    <bean id="pool1" name="p1, p11" class="ru.michaelshell.spring.database.pool.ConnectionPool">
-        <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>
-        <constructor-arg name="properties" type="java.util.Map">
-            <null/>
-        </constructor-arg>
-        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>
-        <constructor-arg name="args" type="java.util.List">
-            <list>
-                <value>--value1--</value>
-                <value>--value2--</value>
-            </list>
-        </constructor-arg>
-        <property name="properties">
-            <map>
-                <entry key="url" value="${db.url}"/>
-                <entry key="password" value="${db.password}"/>
-                <entry key="test" value="#{driver.length() > 10}"/>
-                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>
-                <entry key="currentUser" value="#{systemProperties['user.name']}"/>
-                <entry key="currentUser" value="${user.name}"/>
-            </map>
-        </property>
-    </bean>
 
-    <bean id="companyRepository" class="ru.michaelshell.spring.repository.CompanyRepository"/>
+    <!--    <bean id="pool1" name="p1, p11" class="ru.michaelshell.spring.database.pool.ConnectionPool">-->
+    <!--        <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>-->
+    <!--        <constructor-arg name="properties" type="java.util.Map">-->
+    <!--            <null/>-->
+    <!--        </constructor-arg>-->
+    <!--        <constructor-arg name="poolSize" type="java.lang.Integer" value="${db.pool.size}"/>-->
+    <!--        <constructor-arg name="args" type="java.util.List">-->
+    <!--            <list>-->
+    <!--                <value>&#45;&#45;value1&#45;&#45;</value>-->
+    <!--                <value>&#45;&#45;value2&#45;&#45;</value>-->
+    <!--            </list>-->
+    <!--        </constructor-arg>-->
+    <!--        <property name="properties">-->
+    <!--            <map>-->
+    <!--                <entry key="url" value="${db.url}"/>-->
+    <!--                <entry key="password" value="${db.password}"/>-->
+    <!--                <entry key="test" value="#{driver.length() > 10}"/>-->
+    <!--                <entry key="hosts" value="#{'${db.hosts}'.split(',')}"/>-->
+    <!--                <entry key="currentUser" value="#{systemProperties['user.name']}"/>-->
+    <!--                <entry key="currentUser" value="${user.name}"/>-->
+    <!--            </map>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="companyRepository" class="ru.michaelshell.spring.repository.CompanyRepository"/>-->
 
 
 </beans>

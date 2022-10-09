@@ -3,6 +3,8 @@ package ru.michaelshell.spring.repository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import ru.michaelshell.spring.bpp.Auditing;
 import ru.michaelshell.spring.bpp.InjectBean;
 import ru.michaelshell.spring.bpp.Transaction;
@@ -13,17 +15,22 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
+
 @Auditing
 @Transaction
 public class CompanyRepository implements CrudRepository<Integer, Company> {
 
-//    @InjectBean
-//    @Autowired
-//    @Qualifier("pool2")
-    private ConnectionPool pool2;
+    private final ConnectionPool pool2;
+    private final List<ConnectionPool> pool;
+    private final Integer poolSize;
 
-    @Autowired
-    private List<ConnectionPool> pool;
+    public CompanyRepository(ConnectionPool pool2,
+                             List<ConnectionPool> pool,
+                             @Value("${db.pool.size}") Integer poolSize) {
+        this.pool2 = pool2;
+        this.pool = pool;
+        this.poolSize = poolSize;
+    }
 
     @PostConstruct
     public void init() {
@@ -41,8 +48,4 @@ public class CompanyRepository implements CrudRepository<Integer, Company> {
         System.out.println("delete method...");
     }
 
-    @Autowired
-    public void setPool2(ConnectionPool pool2) {
-        this.pool2 = pool2;
-    }
 }
