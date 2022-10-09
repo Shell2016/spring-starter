@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:property-placeholder location="application.properties"/>
+<!--    <context:property-placeholder location="application.properties"/>-->
     <context:component-scan base-package="ru.michaelshell.spring"
                             annotation-config="true"
                             resource-pattern="**/*.class"
