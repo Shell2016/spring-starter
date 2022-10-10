@@ -2,25 +2,24 @@ package ru.michaelshell.spring.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.*;
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 import ru.michaelshell.spring.database.pool.ConnectionPool;
-import ru.michaelshell.spring.repository.CrudRepository;
 import ru.michaelshell.spring.repository.UserRepository;
 import ru.michaelshell.web.config.WebConfiguration;
 
 @Import(WebConfiguration.class)
 @Configuration
-@PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = "ru.michaelshell.spring",
-        useDefaultFilters = false,
-        includeFilters = {
-                @Filter(type = FilterType.ANNOTATION, value = Component.class), //default
-                @Filter(type = FilterType.ASSIGNABLE_TYPE, value = CrudRepository.class),
-                @Filter(type = FilterType.REGEX, pattern = "com\\..+Repository")
-        })
-
+//@PropertySource("classpath:application.properties")
+//@ComponentScan(basePackages = "ru.michaelshell.spring",
+//        useDefaultFilters = false,
+//        includeFilters = {
+//                @Filter(type = FilterType.ANNOTATION, value = Component.class), //default
+//                @Filter(type = FilterType.ASSIGNABLE_TYPE, value = CrudRepository.class),
+//                @Filter(type = FilterType.REGEX, pattern = "com\\..+Repository")
+//        })
 public class ApplicationConfiguration {
 
     @Bean("pool2")

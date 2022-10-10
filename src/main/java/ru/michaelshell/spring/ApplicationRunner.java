@@ -1,22 +1,21 @@
 package ru.michaelshell.spring;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.michaelshell.spring.config.ApplicationConfiguration;
-import ru.michaelshell.spring.listener.AccessType;
-import ru.michaelshell.spring.listener.EntityEvent;
-import ru.michaelshell.spring.repository.CompanyRepository;
-import ru.michaelshell.spring.database.pool.ConnectionPool;
-import ru.michaelshell.spring.repository.CrudRepository;
-import ru.michaelshell.spring.service.CompanyService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.ConfigurableApplicationContext;
+import ru.michaelshell.spring.config.DatabaseProperties;
 
+
+@SpringBootApplication
+@ConfigurationPropertiesScan
 public class ApplicationRunner {
+
     public static void main(String[] args) {
-        try (var context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
-            var pool = context.getBean("pool1", ConnectionPool.class);
-            System.out.println(pool);
-            var companyService = context.getBean(CompanyService.class);
-            System.out.println(companyService.findById(1));
-        }
+        var context = SpringApplication.run(ApplicationRunner.class, args);
+        System.out.println(context.getBeanDefinitionCount());
+        System.out.println(context.getBean("pool1"));
+        System.out.println(context.getBean(DatabaseProperties.class));
     }
 }
