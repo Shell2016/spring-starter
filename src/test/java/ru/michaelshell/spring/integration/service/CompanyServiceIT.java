@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestConstructor;
 import ru.michaelshell.spring.config.DatabaseProperties;
+import ru.michaelshell.spring.database.pool.ConnectionPool;
 import ru.michaelshell.spring.dto.CompanyReadDto;
 import ru.michaelshell.spring.integration.annotation.IT;
 import ru.michaelshell.spring.service.CompanyService;
@@ -22,7 +23,6 @@ public class CompanyServiceIT {
     private static final Integer COMPANY_ID = 1;
 
     private final CompanyService companyService;
-
     private final DatabaseProperties databaseProperties;
 
     @Test
