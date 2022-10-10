@@ -2,6 +2,7 @@ package ru.michaelshell.spring.repository;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 //@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Auditing
@@ -32,7 +34,7 @@ public class CompanyRepository implements CrudRepository<Integer, Company> {
 
     @PostConstruct
     public void init() {
-        System.out.println("init company repository... (@PostConstruct)");
+        log.info("init company repository... (@PostConstruct)");
     }
 
     @Override

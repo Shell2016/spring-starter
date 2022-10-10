@@ -18,3 +18,11 @@ db:
       timeout: 2
     - size: 3
       timeout: 3
+
+logging:
+  level:
+    root: warn
+    ru.michaelshell.spring.database.pool.ConnectionPool: info
+  file:
+    name: michaelshell.log
+    path: /

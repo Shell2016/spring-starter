@@ -1,5 +1,6 @@
 package ru.michaelshell.spring.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -8,6 +9,7 @@ import ru.michaelshell.spring.config.condition.JpaCondition;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 @Conditional(JpaCondition.class)
 @Configuration
 public class JpaConfiguration {
@@ -20,6 +22,6 @@ public class JpaConfiguration {
 
     @PostConstruct
     private void init() {
-        System.out.println("JpaConfig enabled");
+        log.warn("JpaConfig enabled");
     }
 }
