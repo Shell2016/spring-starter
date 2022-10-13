@@ -6,11 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
-import ru.michaelshell.spring.database.pool.entity.Company;
+import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.dto.CompanyReadDto;
 import ru.michaelshell.spring.listener.EntityEvent;
 import ru.michaelshell.spring.repository.CrudRepository;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,7 @@ class CompanyServiceTest {
 
     @Test
     void findById() {
-        doReturn(Optional.of(new Company(COMPANY_ID)))
+        doReturn(Optional.of(new Company(COMPANY_ID, null, Collections.emptyMap())))
                 .when(companyRepository).findById(COMPANY_ID);
 
         var result = companyService.findById(COMPANY_ID);

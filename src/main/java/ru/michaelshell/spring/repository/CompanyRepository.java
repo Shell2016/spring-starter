@@ -1,21 +1,16 @@
 package ru.michaelshell.spring.repository;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import ru.michaelshell.spring.bpp.Auditing;
-import ru.michaelshell.spring.bpp.InjectBean;
 import ru.michaelshell.spring.bpp.Transaction;
+import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.database.pool.ConnectionPool;
-import ru.michaelshell.spring.database.pool.entity.Company;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +35,7 @@ public class CompanyRepository implements CrudRepository<Integer, Company> {
     @Override
     public Optional<Company> findById(Integer id) {
         System.out.println("findById method...");
-        return Optional.of(new Company(id));
+        return Optional.of(new Company(id, null, Collections.emptyMap()));
     }
 
     @Override
