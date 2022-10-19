@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import ru.michaelshell.spring.database.pool.ConnectionPool;
-import ru.michaelshell.spring.repository.UserRepository;
 import ru.michaelshell.web.config.WebConfiguration;
 
 @Import(WebConfiguration.class)
@@ -33,13 +32,4 @@ public class ApplicationConfiguration {
         return new ConnectionPool("test-pool", 25);
     }
 
-    @Bean
-    public UserRepository userRepository2(ConnectionPool pool2) {
-        return new UserRepository(pool2);
-    }
-
-    @Bean
-    public UserRepository userRepository3() {
-        return new UserRepository(pool3());
-    }
 }

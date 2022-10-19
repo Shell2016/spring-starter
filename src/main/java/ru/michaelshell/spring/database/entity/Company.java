@@ -6,10 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@NamedQuery(
+        name = "Company.findByName",
+        query = "select c from Company c where lower(c.name) = lower(:name2)"
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

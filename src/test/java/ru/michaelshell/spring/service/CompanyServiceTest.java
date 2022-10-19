@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.dto.CompanyReadDto;
 import ru.michaelshell.spring.listener.EntityEvent;
-import ru.michaelshell.spring.repository.CrudRepository;
+import ru.michaelshell.spring.repository.CompanyRepository;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -27,7 +27,7 @@ class CompanyServiceTest {
     @Mock
     private UserService userService;
     @Mock
-    private CrudRepository<Integer, Company> companyRepository;
+    private CompanyRepository companyRepository;
     @Mock
     private ApplicationEventPublisher eventPublisher;
     @InjectMocks

@@ -1,26 +1,39 @@
 package ru.michaelshell.spring.integration.database.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.Commit;
-import org.springframework.transaction.annotation.Transactional;
 import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.integration.annotation.IT;
+import ru.michaelshell.spring.repository.CompanyRepository;
 
 import javax.persistence.EntityManager;
-
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @IT
 @RequiredArgsConstructor
-@Transactional
 class CompanyRepositoryTest {
 
+    private static final Integer APPLE_ID = 40;
     private final EntityManager entityManager;
+    private final CompanyRepository companyRepository;
+
+    @Test
+    void checkFindByQueries() {
+        companyRepository.findByName("google");
+        companyRepository.findAllByNameContainingIgnoreCase("a");
+    }
+
+    @Test
+    void delete() {
+        var optionalCompany = companyRepository.findById(APPLE_ID);
+        assertThat(optionalCompany).isPresent();
+        optionalCompany.ifPresent(companyRepository::delete);
+        entityManager.flush();
+        assertThat(companyRepository.findById(APPLE_ID)).isEmpty();
+    }
 
     @Test
     void findById() {

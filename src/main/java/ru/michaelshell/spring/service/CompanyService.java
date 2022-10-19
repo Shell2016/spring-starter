@@ -3,11 +3,10 @@ package ru.michaelshell.spring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.dto.CompanyReadDto;
 import ru.michaelshell.spring.listener.AccessType;
 import ru.michaelshell.spring.listener.EntityEvent;
-import ru.michaelshell.spring.repository.CrudRepository;
+import ru.michaelshell.spring.repository.CompanyRepository;
 
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 public class CompanyService {
 
     private final UserService userService;
-    private final CrudRepository<Integer, Company> companyRepository;
+    private final CompanyRepository companyRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     public Optional<CompanyReadDto> findById (Integer id) {

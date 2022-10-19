@@ -2,8 +2,7 @@ package ru.michaelshell.spring.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.michaelshell.spring.database.entity.Company;
-import ru.michaelshell.spring.repository.CrudRepository;
+import ru.michaelshell.spring.repository.CompanyRepository;
 import ru.michaelshell.spring.repository.UserRepository;
 
 @Service
@@ -11,6 +10,6 @@ import ru.michaelshell.spring.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final CrudRepository<String, Company> companyRepository;
+    private final CompanyRepository companyRepository;
 
 }
