@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import ru.michaelshell.spring.database.entity.Role;
+import ru.michaelshell.spring.dto.UserFilter;
 import ru.michaelshell.spring.integration.annotation.IT;
 import ru.michaelshell.spring.repository.UserRepository;
 
@@ -18,6 +19,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     private final UserRepository userRepository;
+
+    @Test
+    void checkAuditing() {
+        var ivan = userRepository.findById(1L).get();
+        ivan.setBirthDate(ivan.getBirthDate().plusYears(1L));
+        userRepository.flush();
+        System.out.println();
+    }
+
+    @Test
+    void checkCustomImplementation() {
+        var userFilter = new UserFilter(null, "%ov%", LocalDate.now());
+        var users = userRepository.findAllByFilter(userFilter);
+        System.out.println();
+    }
 
     @Test
     void checkProjections() {
