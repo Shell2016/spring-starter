@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.dto.UserFilter;
 import ru.michaelshell.spring.integration.annotation.IT;
@@ -21,6 +22,7 @@ class UserRepositoryTest {
     private final UserRepository userRepository;
 
     @Test
+    @Commit
     void checkAuditing() {
         var ivan = userRepository.findById(1L).get();
         ivan.setBirthDate(ivan.getBirthDate().plusYears(1L));
@@ -30,8 +32,9 @@ class UserRepositoryTest {
 
     @Test
     void checkCustomImplementation() {
-        var userFilter = new UserFilter(null, "%ov%", LocalDate.now());
+        var userFilter = new UserFilter(null, "ov", LocalDate.now());
         var users = userRepository.findAllByFilter(userFilter);
+        assertThat(users).hasSize(4);
         System.out.println();
     }
 
