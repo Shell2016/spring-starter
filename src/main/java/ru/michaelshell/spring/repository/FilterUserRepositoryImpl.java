@@ -17,13 +17,20 @@ import static ru.michaelshell.spring.database.entity.QUser.user;
 @RequiredArgsConstructor
 public class FilterUserRepositoryImpl implements FilterUserRepository {
 
-    private final String SQL_FIND_BY_COMPANY_ID_AND_ROLE = """
+    private static final String SQL_FIND_BY_COMPANY_ID_AND_ROLE = """
             SELECT 
                 firstname,
                 lastname,
                 birth_date 
             FROM users
             WHERE company_id = ? AND role = ?
+            """;
+
+    public static final String SQL_UPDATE_COMPANY_AND_ROLE = """
+            UPDATE users
+            SET company_id = ?,
+                role = ? 
+            WHERE id = ?
             """;
 
     private final EntityManager entityManager;
@@ -36,6 +43,14 @@ public class FilterUserRepositoryImpl implements FilterUserRepository {
                 rs.getString("lastname"),
                 rs.getDate("birth_date").toLocalDate()
         ), companyId, role.name());
+    }
+
+    @Override
+    public void updateCompanyAndRole(List<User> users) {
+        var args = users.stream()
+                .map(user -> new Object[]{user.getCompany().getId(), user.getRole().name(), user.getId()})
+                .toList();
+        jdbcTemplate.batchUpdate(SQL_UPDATE_COMPANY_AND_ROLE, args);
     }
 
     @Override
