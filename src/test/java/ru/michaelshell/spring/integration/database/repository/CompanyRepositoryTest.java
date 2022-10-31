@@ -1,6 +1,7 @@
 package ru.michaelshell.spring.integration.database.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.integration.IntegrationTestBase;
@@ -27,6 +28,7 @@ class CompanyRepositoryTest extends IntegrationTestBase {
     }
 
     @Test
+    @Disabled
     void delete() {
         var optionalCompany = companyRepository.findById(APPLE_ID);
         assertThat(optionalCompany).isPresent();
