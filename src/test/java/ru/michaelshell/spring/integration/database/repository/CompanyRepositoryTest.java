@@ -3,7 +3,7 @@ package ru.michaelshell.spring.integration.database.repository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import ru.michaelshell.spring.database.entity.Company;
-import ru.michaelshell.spring.integration.annotation.IT;
+import ru.michaelshell.spring.integration.IntegrationTestBase;
 import ru.michaelshell.spring.repository.CompanyRepository;
 
 import javax.persistence.EntityManager;
@@ -12,9 +12,9 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@IT
+
 @RequiredArgsConstructor
-class CompanyRepositoryTest {
+class CompanyRepositoryTest extends IntegrationTestBase {
 
     private static final Integer APPLE_ID = 40;
     private final EntityManager entityManager;

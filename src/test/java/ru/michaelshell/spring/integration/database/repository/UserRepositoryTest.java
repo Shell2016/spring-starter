@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.jdbc.Sql;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.dto.UserFilter;
-import ru.michaelshell.spring.integration.annotation.IT;
+import ru.michaelshell.spring.integration.IntegrationTestBase;
 import ru.michaelshell.spring.repository.UserRepository;
 
 import java.time.LocalDate;
@@ -16,12 +14,9 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@IT
-@Sql({
-        "classpath:sql/data.sql"
-})
+
 @RequiredArgsConstructor
-class UserRepositoryTest {
+class UserRepositoryTest extends IntegrationTestBase {
 
     private final UserRepository userRepository;
 
@@ -39,7 +34,6 @@ class UserRepositoryTest {
     }
 
     @Test
-    @Commit
     void checkAuditing() {
         var ivan = userRepository.findById(1L).get();
         ivan.setBirthDate(ivan.getBirthDate().plusYears(1L));
