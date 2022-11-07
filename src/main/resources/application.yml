@@ -29,6 +29,10 @@ logging:
     path: /
 
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   profiles:
     active: qa
   datasource:
