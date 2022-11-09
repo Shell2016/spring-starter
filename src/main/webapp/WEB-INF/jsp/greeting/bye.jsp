@@ -6,7 +6,7 @@
 </head>
 <body>
 
-Bye jsp!
+Bye ${sessionScope.user.username}!
 
 </body>
 </html>

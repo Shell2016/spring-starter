@@ -6,7 +6,7 @@
 </head>
 <body>
 
-Hello jsp!
+Hello ${requestScope.user.username}!
 
 </body>
 </html>
