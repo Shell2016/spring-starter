@@ -1,25 +1,35 @@
 package ru.michaelshell.spring.http.controller;
 
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.dto.UserReadDto;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1")
 @SessionAttributes({"user"})
 public class GreetingController {
 
+    @ModelAttribute("roles")
+    public List<Role> roles() {
+        return Arrays.asList(Role.values());
+    }
+
 
     @GetMapping("/hello")
-    public ModelAndView hello(ModelAndView mv, HttpServletRequest request) {
+    public String hello(Model model, HttpServletRequest request, UserReadDto userReadDto) {
 //        request.getSession().setAttribute();   session scope
 //        request.setAttribute();  request scope
-        mv.setViewName("greeting/hello");
-        mv.addObject("user", new UserReadDto(1L, "Ivan"));
-        return mv;
+
+        model.addAttribute("user", new UserReadDto(1L, "Ivan"));
+        return "greeting/hello";
     }
 
     @GetMapping("/hello/{id}")
@@ -39,9 +49,9 @@ public class GreetingController {
     }
 
     @GetMapping("/bye")
-    public ModelAndView bye(ModelAndView mv, @SessionAttribute("user") UserReadDto userReadDto) {
+    public String bye(@SessionAttribute("user") UserReadDto userReadDto) {
 //        request.getSession().getAttribute("user");
-        mv.setViewName("greeting/bye");
-        return mv;
+
+        return "greeting/bye";
     }
 }
