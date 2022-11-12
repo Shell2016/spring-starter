@@ -40,7 +40,7 @@ class CompanyServiceTest {
 
         var result = companyService.findById(COMPANY_ID);
         assertTrue(result.isPresent());
-        var expectedResult = new CompanyReadDto(COMPANY_ID);
+        var expectedResult = new CompanyReadDto(COMPANY_ID, null);
         result.ifPresent(actual -> assertEquals(actual, expectedResult));
 
         verify(eventPublisher).publishEvent(any(EntityEvent.class));

@@ -2,10 +2,7 @@ package ru.michaelshell.spring.integration.service;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.TestConstructor;
 import ru.michaelshell.spring.config.DatabaseProperties;
-import ru.michaelshell.spring.database.pool.ConnectionPool;
 import ru.michaelshell.spring.dto.CompanyReadDto;
 import ru.michaelshell.spring.integration.annotation.IT;
 import ru.michaelshell.spring.service.CompanyService;
@@ -30,7 +27,7 @@ public class CompanyServiceIT {
 
         var result = companyService.findById(COMPANY_ID);
         assertTrue(result.isPresent());
-        var expectedResult = new CompanyReadDto(COMPANY_ID);
+        var expectedResult = new CompanyReadDto(COMPANY_ID, null);
         result.ifPresent(actual -> assertEquals(actual, expectedResult));
     }
 }
