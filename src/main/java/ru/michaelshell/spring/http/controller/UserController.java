@@ -2,12 +2,14 @@ package ru.michaelshell.spring.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.michaelshell.spring.dto.UserCreateEditDto;
 import ru.michaelshell.spring.service.UserService;
 
+@Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
@@ -31,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+//    @ResponseStatus(HttpStatus.CREATED)
     public String create(UserCreateEditDto user, Model model) {
         return "redirect:/users/" + userService.create(user).getId();
     }
