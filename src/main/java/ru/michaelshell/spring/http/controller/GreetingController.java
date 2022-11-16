@@ -28,7 +28,7 @@ public class GreetingController {
 //        request.getSession().setAttribute();   session scope
 //        request.setAttribute();  request scope
 
-//        model.addAttribute("user", new UserReadDto(1L, "Ivan"));
+        model.addAttribute("user", userReadDto);
         return "greeting/hello";
     }
 
@@ -47,6 +47,7 @@ public class GreetingController {
         mv.setViewName("greeting/hello");
         return mv;
     }
+
 
     @GetMapping("/bye")
     public String bye(@SessionAttribute("user") UserReadDto userReadDto) {
