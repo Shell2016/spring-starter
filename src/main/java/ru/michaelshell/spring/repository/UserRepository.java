@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.history.RevisionRepository;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.database.entity.User;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public interface UserRepository extends
         JpaRepository<User, Long>,
         FilterUserRepository,
+        QuerydslPredicateExecutor<User>,
         RevisionRepository<User, Long, Integer> {
 
     @Query("select u from User u where u.firstname like %:firstname% and u.lastname like %:lastname%")
