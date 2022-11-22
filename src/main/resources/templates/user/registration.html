@@ -34,6 +34,9 @@
         </div>
         <button type="submit">Register</button>
     </form>
+    <div th:if="${errors}">
+        <p style="color: #d77474" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error</p>
+    </div>
 
 </body>
 </html>

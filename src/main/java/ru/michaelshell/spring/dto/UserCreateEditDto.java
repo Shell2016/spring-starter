@@ -4,17 +4,33 @@ import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.michaelshell.spring.database.entity.Role;
+import ru.michaelshell.spring.validation.UserInfo;
+import ru.michaelshell.spring.validation.group.CreateAction;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Value
 @FieldNameConstants
+@UserInfo(groups = CreateAction.class)
 public class UserCreateEditDto {
+
+    @Email
+    @NotBlank
     String username;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate birthDate;
+
+
+    @Size(min = 3, max = 64)
     String firstname;
+
     String lastname;
+
     Role role;
+
     Integer companyId;
 }
