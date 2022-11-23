@@ -1,6 +1,7 @@
 package ru.michaelshell.spring.integration.service;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.dto.UserCreateEditDto;
@@ -36,6 +37,7 @@ public class UserServiceIT extends IntegrationTestBase {
         maybeUser.ifPresent(user -> assertEquals("ivan@gmail.com", user.getUsername()));
     }
 
+
     @Test
     void create() {
         UserCreateEditDto userDto = new UserCreateEditDto(
@@ -55,6 +57,7 @@ public class UserServiceIT extends IntegrationTestBase {
         assertEquals(userDto.getCompanyId(), result.getCompany().id());
         assertSame(userDto.getRole(), result.getRole());
     }
+
 
     @Test
     void update() {

@@ -2,12 +2,15 @@ package ru.michaelshell.spring.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.database.entity.User;
 import ru.michaelshell.spring.dto.UserCreateEditDto;
 import ru.michaelshell.spring.repository.CompanyRepository;
 
 import java.util.Optional;
+
+import static java.util.function.Predicate.not;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +38,10 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
         user.setLastname(object.getLastname());
         user.setRole(object.getRole());
         user.setCompany(getCompany(object.getCompanyId()));
+
+        Optional.ofNullable(object.getImage())
+                .filter(not(MultipartFile::isEmpty))
+                .ifPresent(image -> user.setImage(image.getOriginalFilename()));
     }
 
     private Company getCompany(Integer companyId) {

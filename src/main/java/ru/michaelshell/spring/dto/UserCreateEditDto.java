@@ -3,6 +3,7 @@ package ru.michaelshell.spring.dto;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.validation.UserInfo;
 import ru.michaelshell.spring.validation.group.CreateAction;
@@ -33,4 +34,6 @@ public class UserCreateEditDto {
     Role role;
 
     Integer companyId;
+
+    MultipartFile image;
 }
