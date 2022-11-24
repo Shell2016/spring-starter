@@ -25,6 +25,8 @@ public class User extends AuditingEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String password;
+
     @Column(unique = true, nullable = false)
     private String username;
 
