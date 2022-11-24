@@ -1,7 +1,9 @@
 package ru.michaelshell.spring.mapper;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.michaelshell.spring.database.entity.Company;
 import ru.michaelshell.spring.database.entity.User;
@@ -17,6 +19,7 @@ import static java.util.function.Predicate.not;
 public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
 
     private final CompanyRepository companyRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User map(UserCreateEditDto object, User toObject) {
@@ -38,6 +41,11 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
         user.setLastname(object.getLastname());
         user.setRole(object.getRole());
         user.setCompany(getCompany(object.getCompanyId()));
+
+        Optional.ofNullable(object.getRawPassword())
+                .filter(StringUtils::hasText)
+                .map(passwordEncoder::encode)
+                .ifPresent(user::setPassword);
 
         Optional.ofNullable(object.getImage())
                 .filter(not(MultipartFile::isEmpty))
