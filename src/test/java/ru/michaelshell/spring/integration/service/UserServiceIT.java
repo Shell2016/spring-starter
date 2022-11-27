@@ -1,8 +1,8 @@
 package ru.michaelshell.spring.integration.service;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.dto.UserCreateEditDto;
 import ru.michaelshell.spring.dto.UserReadDto;
@@ -42,11 +42,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void create() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "test",
                 LocalDate.now(),
                 "test",
                 "test",
                 Role.ADMIN,
-                COMPANY_1
+                COMPANY_1,
+                new MockMultipartFile("test", new byte[0])
         );
         UserReadDto result = userService.create(userDto);
 
@@ -63,11 +65,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void update() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "test",
                 LocalDate.now(),
                 "test",
                 "test",
                 Role.ADMIN,
-                COMPANY_1
+                COMPANY_1,
+                new MockMultipartFile("test", new byte[0])
         );
         Optional<UserReadDto> result = userService.update(USER_1, userDto);
         assertTrue(result.isPresent());
