@@ -7,3 +7,5 @@ gradle
 *.log
 *.log.*
 /images
+id_rsa.pub
+scripts

@@ -38,7 +38,7 @@ spring:
   profiles:
     active: qa
   datasource:
-    url: jdbc:postgresql://localhost:5434/postgres
+    url: jdbc:postgresql://localhost:5433/postgres
     username: postgres
     password: pass
     driver-class-name: org.postgresql.Driver
@@ -52,3 +52,12 @@ spring:
         hbm2ddl:
           auto: validate
     open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 1065508579395-v8p66h0tovlv881do9lapt4uocghmm4a.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope: openid,email,profile
