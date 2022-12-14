@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import ru.michaelshell.spring.config.DatabaseProperties;
 
-
 @SpringBootApplication
 @ConfigurationPropertiesScan
 public class ApplicationRunner {

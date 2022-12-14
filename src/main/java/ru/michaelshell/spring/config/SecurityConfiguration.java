@@ -40,9 +40,14 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 //                .csrf().disable()
-                .authorizeRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/registration", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .antMatchers("/admin/**", "/users/{\\d+}/delete").hasAuthority(Role.ADMIN.getAuthority())
+                .authorizeHttpRequests(urlConfig -> urlConfig
+                        .antMatchers("/login",
+                                "/users/registration",
+                                "/users/create",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**").permitAll()
+                        .antMatchers("/admin/**",
+                                "/users/{\\d+}/delete").hasAuthority(Role.ADMIN.getAuthority())
                         .anyRequest().authenticated()
 
                 )

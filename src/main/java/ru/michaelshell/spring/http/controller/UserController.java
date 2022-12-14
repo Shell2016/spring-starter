@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String findById(@PathVariable Long id, Model model,
                            @CurrentSecurityContext SecurityContext securityContext,
                            @AuthenticationPrincipal UserDetails userDetails) {
