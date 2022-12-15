@@ -22,7 +22,7 @@ public class AuditConfiguration {
 
         return () -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication.getPrincipal() == "anonymousUser") {
+            if (authentication == null || authentication.getPrincipal() == "anonymousUser") {
                 return Optional.of("new_user_registration");
             }
             return Optional.ofNullable(((UserDetails) authentication.getPrincipal()).getUsername());
