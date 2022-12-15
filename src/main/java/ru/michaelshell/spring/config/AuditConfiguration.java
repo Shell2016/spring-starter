@@ -19,16 +19,15 @@ public class AuditConfiguration {
 
     @Bean
     public AuditorAware<String> auditorAware() {
-        // SecurityContext.getCurrentUser().getEmail()
+
         return () -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication.getPrincipal() == "anonymousUser") {
                 return Optional.of("new_user_registration");
             }
-            return Optional.of(((UserDetails) authentication.getPrincipal()).getUsername());
+            return Optional.ofNullable(((UserDetails) authentication.getPrincipal()).getUsername());
         };
 //        return () -> Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
-//                .filter(Authentication::isAuthenticated)
 //                .map(authentication -> (UserDetails) authentication.getPrincipal())
 //                .map(UserDetails::getUsername);
     }

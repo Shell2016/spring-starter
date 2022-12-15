@@ -70,6 +70,7 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
             String email = userRequest.getIdToken().getClaim("email");
             // TODO: 28.11.2022 if not exist ->  create user
             UserDetails userDetails = userService.loadUserByUsername(email);
+//            OidcUser oidcUser = new OidcUserService().loadUser(userRequest);
             DefaultOidcUser oidcUser = new DefaultOidcUser(userDetails.getAuthorities(), userRequest.getIdToken());
 
             Set<Method> userDetailsMethods = Set.of(UserDetails.class.getMethods());
