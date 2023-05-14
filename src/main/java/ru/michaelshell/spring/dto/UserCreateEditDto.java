@@ -40,4 +40,5 @@ public class UserCreateEditDto {
     Integer companyId;
 
     MultipartFile image;
+
 }

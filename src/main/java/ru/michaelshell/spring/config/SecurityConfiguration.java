@@ -1,6 +1,7 @@
 package ru.michaelshell.spring.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,9 +14,7 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.michaelshell.spring.database.entity.Role;
-import ru.michaelshell.spring.dto.UserCreateEditDto;
 import ru.michaelshell.spring.service.UserService;
-import ru.michaelshell.spring.utils.ApplicationUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -24,6 +23,7 @@ import java.util.Set;
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
 
     private final UserService userService;
@@ -73,29 +73,17 @@ public class SecurityConfiguration /*extends WebSecurityConfigurerAdapter*/ {
             String email = userRequest.getIdToken().getClaim("email");
 
             try {
-
                 return getOidcUser(userRequest, email);
 
             } catch (UsernameNotFoundException e) {
-
-                UserCreateEditDto defaultUser = new UserCreateEditDto(
-                        email,
-                        "{noop}0000",
-                        null,
-                        email,
-                        null,
-                        Role.USER,
-                        4,
-                        ApplicationUtils.getEmptyImage()
-                );
-                userService.create(defaultUser);
-
+                userService.createDefaultUser(email);
                 return getOidcUser(userRequest, email);
             }
 //            OidcUser oidcUser = new OidcUserService().loadUser(userRequest);
-
         };
     }
+
+
 
     private OidcUser getOidcUser(OidcUserRequest userRequest, String email) {
         UserDetails userDetails = userService.loadUserByUsername(email);

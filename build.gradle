@@ -39,6 +39,7 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'org.liquibase:liquibase-core'
+    implementation 'org.passay:passay:1.6.2'
 
     annotationProcessor 'com.querydsl:querydsl-apt'
 

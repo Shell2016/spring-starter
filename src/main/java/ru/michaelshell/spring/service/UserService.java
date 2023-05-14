@@ -2,6 +2,7 @@ package ru.michaelshell.spring.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import ru.michaelshell.spring.database.entity.Role;
 import ru.michaelshell.spring.database.entity.User;
 import ru.michaelshell.spring.database.querydsl.QPredicate;
 import ru.michaelshell.spring.dto.UserCreateEditDto;
@@ -19,6 +21,8 @@ import ru.michaelshell.spring.dto.UserReadDto;
 import ru.michaelshell.spring.mapper.UserCreateEditMapper;
 import ru.michaelshell.spring.mapper.UserReadMapper;
 import ru.michaelshell.spring.repository.UserRepository;
+import ru.michaelshell.spring.utils.ApplicationUtils;
+import ru.michaelshell.spring.utils.PasswordUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +30,7 @@ import java.util.Optional;
 
 import static ru.michaelshell.spring.database.entity.QUser.user;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -70,6 +75,24 @@ public class UserService implements UserDetailsService {
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();
+    }
+
+    @Transactional
+    public void createDefaultUser(String email) {
+
+        UserCreateEditDto defaultUser = new UserCreateEditDto(
+                email,
+                PasswordUtils.generatePassword(),
+                null,
+                email,
+                null,
+                Role.USER,
+                4,
+                ApplicationUtils.getEmptyImage()
+        );
+
+        create(defaultUser);
+        log.info("New user created: " + email);
     }
 
     @Transactional
